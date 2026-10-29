@@ -6,9 +6,10 @@ set -e
 # Usage of this script
 program_name=$0
 usage () {
-  echo "usage: $program_name [--android-api 29] [--build-tools "29.0.3"] [--build] [--test]"
+  echo "usage: $program_name [--android-api 29] [--build-tools "29.0.3"] [--android-platform android-29] [--build] [--test]"
   echo "  --android-api <androidVersion> Use specific Android version from \`sdkmanager --list\`"
   echo "  --build-tools <version>        Use specific build tools version"
+  echo "  --android-platform <name>      SDK platform package to install (default: android-<androidVersion>)"
   echo "  --android-ndk                  Install Android NDK"
   echo "  --ndk-version <version>        Install a specific Android NDK version from \`sdkmanager --list\`"
   echo "  --gcloud                       Install the latest GCloud SDK version"
@@ -29,6 +30,7 @@ while true; do
   case "$1" in
     --android-api ) android_api="$2"; shift 2 ;;
     --build-tools ) android_build_tools="$2"; shift 2 ;;
+    --android-platform ) android_platform="$2"; shift 2 ;;
     --build ) build=true; shift ;;
     --test ) test=true; shift ;;
     --android-ndk ) android_ndk=true; shift ;;
@@ -49,6 +51,10 @@ fi
 if [ -z "$android_build_tools" ]; then
   echo "Missing --build-tools parameter"
   usage
+fi
+
+if [ -z "$android_platform" ]; then
+  android_platform="android-$android_api"
 fi
 
 if [ $large_test = true ]; then
@@ -95,7 +101,7 @@ if [ "$build" = true ]; then
   echo $ndk_version_build_arg
   set -x
   docker build \
-    --build-arg android_api=android-$android_api \
+    --build-arg android_api="$android_platform" \
     --build-arg android_build_tools="$android_build_tools" \
     --build-arg android_ndk="$android_ndk" \
     --build-arg gcloud="$gcloud" \

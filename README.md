@@ -146,9 +146,10 @@ You can change image settings via its [Dockerfile](https://github.com/faberNovel
 You can build, test, and deploy image using [ci_cd.sh](https://github.com/faberNovel/docker-android/blob/main/ci_cd.sh) script. You need to install docker first.
 All scripts must be POSIX compliants.
 ```sh
-usage: ./ci_cd.sh [--android-api 29] [--build-tools "29.0.3"] [--build] [--test]
+usage: ./ci_cd.sh [--android-api 29] [--build-tools "29.0.3"] [--android-platform android-29] [--build] [--test]
   --android-api <androidVersion> Use specific Android version from `sdkmanager --list`
   --build-tools <version>        Use specific build tools version
+  --android-platform <name>      SDK platform package to install (default: android-<androidVersion>)
   --android-ndk                  Install Android NDK
   --gcloud                       Install Google Cloud SDK
   --ndk-version <version>        Install a specific Android NDK version from `sdkmanager --list`
