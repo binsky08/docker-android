@@ -28,6 +28,12 @@
         {
             "api": 36,
             "build_tools": "36.0.0"
+        },
+        {
+            "api": 37,
+            "build_tools": "37.0.0",
+            "platform": "android-37.0",
+            "__comment": "Since API 37 the platform package is named android-<major>.<minor>"
         }
     ],
     "android_ndk": [
